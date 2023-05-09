@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="containerFilteration">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-12">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label>{{"shopping.all" | translate}}</mat-label>
+          <mat-select (selectionChange)="changePage($event)" [(value)]="selectedCategory">
+            <mat-option value="all">
+              {{"shopping.all" | translate}}
+            </mat-option>
+            <mat-option *ngFor="let categorie of categoriesData" [value]="categorie">
+              {{categorie}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-users-tasks position-relative d-flex">
+  <div class="container">
+    <div class="col">
+      <div class="row">
+        <div class="section-card col-12 col-lg-3 col-md-4 col-sm-6"
+          *ngFor="let product of products; let index = index; trackBy:identify">
+          <mat-card class="example-card d-flex position-relative">
+            <div class="container-header-card">
+              <div class="image-card">
+                <img mat-card-image width="150px" [src]="product.image" alt="Photo of a Shiba Inu">
+              </div>
+              <mat-card-header>
+                <mat-card-title>{{product.title}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p class="truncate" matTooltip="{{product.description}}" matTooltipPosition="below">
+                  {{product.description | ellipsis:50}}</p>
+              </mat-card-content>
+            </div>
+            <mat-card-actions>
+              <button mat-raised-button>Details</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="container-spinner d-flex" *ngIf="isLoading">
+          <mat-spinner diameter="60" [style.width.px]="60" [style.height.px]="60"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

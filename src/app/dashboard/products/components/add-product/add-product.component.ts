@@ -2,7 +2,6 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, NgZone, OnInit, ViewChild, inject, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { AllProductsState } from '../../store/state/allProducts.state';
 import { Observable, take } from 'rxjs';
@@ -75,7 +74,7 @@ export class AddProductComponent implements OnInit {
     if (!this.closeDialog) {
       this.dialogRef.close();
     } else {
-      const dialogRef = this.matDialig.open(ConfirmationComponent, {
+      this.matDialig.open(ConfirmationComponent, {
         width: "30vw"
       });
     }
@@ -84,34 +83,18 @@ export class AddProductComponent implements OnInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.fileName = file.name;
-    debugger;
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onload = () => {
-    //   debugger;
-    //   console.log(reader.result);
-    // };
     this.newProductForm.get('image')?.setValue(file.name);
-
   }
   createProduct() {
     this.selectedImage = true;
-    let form: FormData = this.prepareFormData();
     if (this.newProductForm.valid) {
-      debugger;
       if (this.data) {
-        debugger;
         this.store.dispatch(new UpdateProduct(this.newProductForm.value, this.data.id)).subscribe({
           next: res => {
-            debugger;
             this.dialogRef.close();
             this.toastr.success("success", 'Success', {
               timeOut: 2000
             });
-          },
-          error: err => {
-            console.log(err, err);
-            // this.error.handleError(err);
           }
         });
       } else {
@@ -121,26 +104,10 @@ export class AddProductComponent implements OnInit {
             this.toastr.success("success", 'Success', {
               timeOut: 2000
             });
-          },
-          error: err => {
-            console.log(err, err);
-            // this.error.handleError(err);
           }
         });
       }
-
     }
   }
-  prepareFormData() {
-    let newDate = moment(this.newProductForm.get('deadline')?.value).format("DD-MM-YYYY");
-    let formData = new FormData();
-    Object.entries(this.newProductForm.value).forEach(([key, value]: any) => {
-      if (key === "deadline") {
-        formData.append(key, newDate);
-      } else {
-        formData.append(key, value);
-      }
-    });
-    return formData;
-  }
+
 }

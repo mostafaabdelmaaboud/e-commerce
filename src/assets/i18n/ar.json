@@ -54,10 +54,14 @@
     "price": "سعر",
     "priceis": "السعر",
     "imageis": "الصورة",
+    "image": "صوره",
     "description": "وصف",
     "descriptionis": "الوصف",
     "category": "فئة",
-    "categoryis": "الفئة هي"
+    "categoryis": "الفئة هي",
+    "rating": "تقييم",
+    "categories": "فئات",
+    "all": "الجميع"
   },
   "MAT_PAGINATOR": {
     "ITEMS_PER_PAGE": "مواد لكل صفحة",

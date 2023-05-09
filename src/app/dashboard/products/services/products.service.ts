@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AllProductsModel, CreateProductModel, DeleteProductModel } from '../store/state/allProducts.state';
+import { AllProductsModel, DeleteProductModel } from '../store/state/allProducts.state';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AddProductModel, ProductsModel } from '../context/DTOs';
@@ -20,14 +20,12 @@ export class ProductsService {
     return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
   }
   addProduct(mode: AddProductModel): Observable<ProductsModel> {
-    debugger;
     return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
   }
-  deleteProduct(id: string): Observable<DeleteProductModel["deleteProduct"]> {
-    return this.http.delete<DeleteProductModel["deleteProduct"]>(`${environment.baseApi}/tasks/delete-task/${id}`);
+  deleteProduct(id: string): Observable<ProductsModel> {
+    return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
   }
-  updateProduct(mode: AddProductModel, id: number): Observable<CreateProductModel["addProduct"]> {
-    debugger;
-    return this.http.put<CreateProductModel["addProduct"]>(`${environment.baseApi}/products/${id}`, mode);
+  updateProduct(mode: AddProductModel, id: number): Observable<ProductsModel> {
+    return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
   }
 }

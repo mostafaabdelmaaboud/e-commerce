@@ -54,10 +54,14 @@
     "price": "price",
     "priceis": "price is",
     "imageis": "image is",
+    "image": "image",
     "description": "description",
     "descriptionis": "description is",
     "category": "category",
-    "categoryis": "categoryis"
+    "categoryis": "categoryis",
+    "rating": "rating",
+    "categories": "categories",
+    "all": "All"
   },
   "MAT_PAGINATOR": {
     "ITEMS_PER_PAGE": "Items per page",

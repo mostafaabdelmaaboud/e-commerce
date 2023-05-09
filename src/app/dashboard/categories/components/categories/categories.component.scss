@@ -1,0 +1,62 @@
+.containerFilteration {
+  padding-top: 40px;
+}
+
+.container-spinner {
+  justify-content: center;
+
+  padding-top: 90px;
+}
+
+.section-card {
+  .example-card {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  margin-bottom: 20px;
+}
+
+
+
+.container-header-card {
+  .image-card {
+    justify-content: center;
+    display: flex;
+    padding: 15px 0;
+
+    .mat-card-image {
+      width: initial !important;
+      margin: 0 !important;
+
+      height: 130px;
+    }
+  }
+}
+
+.section-one {
+
+  .mat-card-header {
+    margin-bottom: 10px;
+  }
+}
+
+
+:host ::ng-deep .mat-card-header {
+  .mat-card-title {
+    color: #3f51b5 !important;
+  }
+}
+
+:host ::ng-deep .mat-card-header-text {
+  margin: 0 0px !important;
+}
+
+:host ::ng-deep .mat-card {
+  .mat-card-actions {
+    margin-bottom: 0px !important;
+    padding-bottom: 5px !important;
+  }
+
+  height: 100%;
+}

@@ -5,10 +5,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -49,12 +46,12 @@ describe('LoginComponent', () => {
 
   });
   it('#changeLanguageSelect() check on property selectedLang', () => {
-    component.changeLanguageSelect("ar");
+    component.selectChange({ value: "ar" });
     expect(component.langs).toEqual([
       { value: 'ar', viewValue: 'عربي' },
       { value: 'en', viewValue: 'انجليزي' },
     ])
-    component.changeLanguageSelect("en")
+    component.selectChange({ value: "en" })
     expect(component.langs).toEqual([
       { value: 'ar', viewValue: 'Arabic' },
       { value: 'en', viewValue: 'English' },

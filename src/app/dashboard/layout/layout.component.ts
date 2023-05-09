@@ -30,7 +30,6 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.translate.onLangChange.subscribe((lang) => {
-      console.log("lang", lang.translations.login.english);
       this.langs[0].viewValue = lang.translations.login.arabic;
       this.langs[1].viewValue = lang.translations.login.english;
 

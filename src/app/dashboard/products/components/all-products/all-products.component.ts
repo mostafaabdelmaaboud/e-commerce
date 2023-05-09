@@ -10,10 +10,8 @@ import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DeleteProduct, GetAllProducts } from '../../store/actions/allProducts.actions';
-import * as moment from 'moment';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { MatTableDataSource } from '@angular/material/table';
-
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
@@ -24,19 +22,16 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AllProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   displayedColumns: string[] = ['image', 'title', 'price', 'category', 'rating', 'actions'];
   tableData: ProductsModel[] = [];
   dataSource!: MatTableDataSource<any>;
-
-  isLoading = true;
+  isLoading = false;
   loading: any = {};
   public translate = inject(TranslateService);
   @Select(AllProductsState.allProducts) allProducts$!: Observable<any[]>;
   @Select(AllProductsState.massageDeleteTaks) massageDeleteTaks$!: Observable<string | null>;
   @Select(AllProductsState.productsLoaded) productsLoaded$!: Observable<boolean>;
   @Select(AllProductsState.totalItems) totalItems$!: Observable<number>;
-
   private store = inject(Store);
   public dialog = inject(MatDialog);
   private error = inject(HandleErrorService);
@@ -44,15 +39,12 @@ export class AllProductsComponent implements OnInit {
   private fb = inject(FormBuilder);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   dataObs$!: Observable<any>;
-
   subscription!: Subscription;
   length = 0;
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   pageEvent!: PageEvent;
-
-
   formFilteration!: FormGroup;
   filteration: Filteration = {
     page: 1
@@ -70,7 +62,6 @@ export class AllProductsComponent implements OnInit {
   constructor(
     public _MatPaginatorIntl: MatPaginatorIntl
   ) { }
-
   ngOnInit(): void {
     this.paginationTranslate();
     this.translate.onLangChange.subscribe((lang) => {
@@ -78,25 +69,18 @@ export class AllProductsComponent implements OnInit {
     });
     this.createForm();
     this.subscription = this.allProducts$.subscribe((res: ProductsModel[]) => {
-      debugger;
-      console.log(res, res);
       this.tableData = this.mappingProducts(res);
       if (res.length) {
         this.setPagination(this.tableData);
 
       }
     });
-
     this.totalItems$.subscribe(totalItems => {
-      debugger;
       this.length = totalItems;
-      console.log(totalItems)
     })
     this.productsLoaded$.subscribe(productsLoaded => {
-      debugger;
-      debugger;
       if (!productsLoaded) {
-        debugger;
+        this.isLoading = true;
         this.store.dispatch(new GetAllProducts(this.filteration)).subscribe({
           next: res => {
             this.isLoading = false;
@@ -108,46 +92,12 @@ export class AllProductsComponent implements OnInit {
       } else {
         this.isLoading = false;
       }
-
     })
 
-    this.formFilteration.get("keyword")?.valueChanges.pipe(debounceTime(1000)).subscribe(formCotrol => {
-      this.prepareFilteration("keyword", formCotrol);
-    });
-    this.formFilteration.get("userId")?.valueChanges.subscribe(formCotrol => {
-      this.prepareFilteration("userId", formCotrol);
-
-    });
-    this.formFilteration.get("status")?.valueChanges.subscribe(formCotrol => {
-      // console.log("formCotrol status", formCotrol);
-      this.prepareFilteration("status", formCotrol);
-
-    });
-    this.formFilteration.get("range")?.valueChanges.subscribe(formCotrol => {
-      console.log("formCotrol range", formCotrol);
-      this.filteration.fromDate = null;
-      this.filteration.toDate = null;
-
-      let formatDate = formCotrol;
-      if (formCotrol.fromDate != null) {
-        this.filteration.fromDate = moment(formCotrol.fromDate).format("DD-MM-YYYY");
-      }
-
-      if (formCotrol.toDate != null && formCotrol.fromDate != null) {
-        this.filteration.toDate = moment(formCotrol.toDate).format("DD-MM-YYYY");
-        if (this.filteration.toDate != this.filteration.fromDate) {
-          this.prepareFilteration("toDate", this.filteration.fromDate);
-
-        }
-      }
-    });
-
   }
-
   setPagination(tableData: ProductsModel[]) {
     this.dataSource = new MatTableDataSource<ProductsModel>(tableData);
     this.dataSource.paginator = this.paginator;
-
   }
   paginationTranslate() {
     this._MatPaginatorIntl.itemsPerPageLabel = this.translate.instant("MAT_PAGINATOR.ITEMS_PER_PAGE");
@@ -168,7 +118,6 @@ export class AllProductsComponent implements OnInit {
     };
     this._MatPaginatorIntl.changes.next();
   }
-
   createForm() {
     this.formFilteration = this.fb.group({
       keyword: [""],
@@ -181,47 +130,21 @@ export class AllProductsComponent implements OnInit {
     })
   }
   handlePageEvent(e: PageEvent) {
-    debugger;
     this.pageEvent = e;
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.filteration.page = this.pageIndex + 1;
-    // this.filteration.limit = this.pageSize;
+  }
 
-    // this.store.dispatch(new GetAllProducts(this.filteration))
-  }
-  prepareFilteration(type: string, value: any) {
-    switch (type) {
-      case "keyword":
-        this.filteration.keyword = value;
-        this.store.dispatch(new GetAllProducts(this.filteration));
-        break;
-      case "userId":
-        this.filteration.userId = value;
-        this.store.dispatch(new GetAllProducts(this.filteration));
-        break;
-      case "status":
-        this.filteration.status = value;
-        this.store.dispatch(new GetAllProducts(this.filteration));
-        break;
-      case "toDate":
-        this.store.dispatch(new GetAllProducts(this.filteration));
-        break;
-      default:
-        this.store.dispatch(new GetAllProducts(this.filteration));
-        break;
-    }
-  }
   deleteRow(id: string) {
-    debugger;
     let objIndex = this.tableData.findIndex((obj: any) => obj.id === id);
     let conf = confirm("Want to delete?");
     if (conf) {
       this.tableData[objIndex].loading = true;
+      this.setPagination(this.tableData);
       this.store.dispatch(new DeleteProduct(id)).subscribe({
         next: data => {
-          debugger;
           this.tableData[objIndex].loading = false;
           this.toastr.success("Product Is Deleted", 'Success', {
             timeOut: 2000
@@ -231,14 +154,10 @@ export class AllProductsComponent implements OnInit {
           this.tableData[objIndex].loading = false;
         },
       })
-      //Logic to delete the item
     }
-
   }
   mappingProducts(data: ProductsModel[]): ProductsModel[] {
-    debugger;
     let newTasks: ProductsModel[] | any = data.map((item) => {
-      debugger;
       return {
         ...item,
         loading: false
@@ -250,9 +169,6 @@ export class AllProductsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddProductComponent, {
       width: "40vw",
       data: null
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
   updateRow(element: ProductsModel) {
