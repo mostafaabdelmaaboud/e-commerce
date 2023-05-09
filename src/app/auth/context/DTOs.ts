@@ -1,11 +1,11 @@
 
 export interface IntLogin {
-  email: string,
+  username: string,
   password: string,
   role: string
 }
 
 export interface Authlogin {
-  token: null,
-  userId: null,
+  token: string | null,
+  userId: string | null,
 }

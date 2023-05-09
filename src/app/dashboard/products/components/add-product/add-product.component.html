@@ -1,0 +1,67 @@
+<div mat-dialog-title class="headerAddTask">
+  <h1 class="m-0">{{"shopping.addnewproduct" | translate}}</h1>
+  <button class="header-close" mat-button (click)="onNoClick()">x</button>
+</div>
+<div class="formDialog">
+  <form [formGroup]="newProductForm" (submit)="createProduct()">
+    <div mat-dialog-content>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>{{"shopping.title" | translate}}</mat-label>
+        <input matInput name="title" formControlName="title" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="newProductForm.get('title')?.hasError('required')">
+          {{"shopping.titleis" | translate}} <strong>{{"shopping.required" | translate}}</strong>
+        </mat-error>
+        <mat-error *ngIf="newProductForm.get('title')?.hasError('minlength') && newProductForm.get('title')?.touched">
+          {{"shopping.minimunlengthfivecharacters" | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>{{"shopping.price" | translate}}</mat-label>
+        <input type="number" matInput name="price" formControlName="price" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="newProductForm.get('price')?.hasError('required')">
+          {{"shopping.priceis" | translate}} <strong>{{"shopping.required" | translate}}</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="upload">
+        <input type="file" accept="image/png, image/jpeg, image/jpg" class="file-input d-none"
+          (change)="onFileSelected($event)" #fileUpload>
+        <div class="file-upload" [class.borderRad]="newProductForm.get('image')?.hasError('required') && selectedImage"
+          (click)="fileUpload.click()">
+          {{fileName || "shopping.nofileuploadedyet" | translate}}
+          <button mat-mini-fab color="primary" type="button" class="upload-btn">
+            <i class="fa-solid fa-paperclip"></i>
+          </button>
+        </div>
+        <mat-error *ngIf="newProductForm.get('image')?.hasError('required') && selectedImage">
+          {{"shopping.imageis"| translate}} <strong>{{"shopping.required" | translate}}</strong>
+        </mat-error>
+      </div>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>{{"shopping.category" | translate}}</mat-label>
+        <input type="text" matInput name="category" formControlName="category" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="newProductForm.get('category')?.hasError('required')">
+          {{"shopping.categoryis" | translate}} <strong>{{"shopping.required" | translate}}</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>{{"shopping.description" | translate}}</mat-label>
+        <textarea formControlName="description" matInput rows="8" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1" cdkAutosizeMaxRows="15"></textarea>
+        <mat-error *ngIf="newProductForm.get('description')?.hasError('required')">
+          {{"shopping.descriptionis" | translate}}<strong>{{"shopping.required" | translate}}</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="dialog-footer">
+      <button mat-raised-button cdkFocusInitial color="primary" type="submit">{{data ? ("shopping.update" |
+        translate) :
+        ("shopping.create" | translate)}}</button>
+      <button mat-raised-button cdkFocusInitial color="warn" type="button" (click)="onNoClick()">{{"shopping.close" |
+        translate}}</button>
+    </div>
+  </form>
+  <div class="contentSpinner" *ngIf="isLoaded">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</div>

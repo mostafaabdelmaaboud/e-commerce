@@ -4,7 +4,7 @@
       <div class="background-side-login d-flex justify-content-center align-items-center">
         <div class="inner-text-title">
           <h1 class="title position-relative">
-            {{'login.taskdistribution' | translate}}
+            {{'login.shoppingwebsite' | translate}}
             <span>{{'login.developers' | translate}}</span>
           </h1>
           <p class="p-0 parag">{{'login.youwillneverknow' | translate}}</p>
@@ -30,16 +30,13 @@
         </div>
         <form class="form-login" [formGroup]="loginForm" (submit)="login()">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label fw-bold">{{"login.email" | translate}}</label>
-            <input type="email" class="form-control" name="email" formControlName="email" id="exampleInputEmail1"
-              aria-describedby="emailHelp">
+            <label for="exampleInputUsername1" class="form-label fw-bold">{{"login.username" | translate}}</label>
+            <input type="text" class="form-control" name="username" formControlName="username"
+              id="exampleInputUsername1" aria-describedby="usernameHelp">
             <ng-container
-              *ngIf="(isSubmited && f['email'].invalid) || f['email'].errors && (f['email'].invalid && f['email'].dirty)">
-              <div *ngIf="f['email'].errors?.['required']" class="alert alert-danger custom-alert" role="alert">
-                {{"login.emailisrequired" | translate}}
-              </div>
-              <div *ngIf="f['email'].errors?.['pattern']" class="alert alert-danger custom-alert" role="alert">
-                {{"login.pleaseenteryouremail" | translate}}
+              *ngIf="(isSubmited && f['username'].invalid) || f['username'].errors && (f['username'].invalid && f['username'].dirty)">
+              <div *ngIf="f['username'].errors?.['required']" class="alert alert-danger custom-alert" role="alert">
+                {{"login.usernameisrequired" | translate}}
               </div>
             </ng-container>
           </div>
@@ -56,10 +53,6 @@
                 {{"login.patternpassword" | translate}}
               </div>
             </ng-container>
-          </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">{{"login.rememberMe" | translate}}</label>
           </div>
 
           <button type="submit" class="btn pe-auto btn-primary w-100 background-gradient-3E9 border-0">

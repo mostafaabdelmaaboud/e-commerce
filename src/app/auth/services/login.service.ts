@@ -11,6 +11,7 @@ export class LoginService {
   private http = inject(HttpClient);
   constructor() { }
   login(model: IntLogin): Observable<Authlogin> {
+    debugger;
     return this.http.post<Authlogin>(`${environment.baseApi}/auth/login`, model);
   }
 }

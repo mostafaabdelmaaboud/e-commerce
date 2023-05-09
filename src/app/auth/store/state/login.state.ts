@@ -44,19 +44,26 @@ export class AuthState {
 
   @Action(Login)
   login({ patchState }: StateContext<AuthStateModel>, action: Login) {
+    debugger;
     patchState({ isLoading: true })
     return this.authService.login(action.payload).pipe(
       tap(res => {
+        let userData;
+        if (res.token) {
+          userData = JSON.parse(window.atob(res.token.split(".")[1]));
+        }
+        console.log(userData);
+        debugger;
         patchState({
           token: res.token,
-          userId: res.userId,
+          userId: userData.sub,
           isLoading: false,
           isSuccess: true,
           isError: null
         });
       }),
       catchError(err => {
-
+        debugger;
         patchState({
           isLoading: false,
           isSuccess: false,

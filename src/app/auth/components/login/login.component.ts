@@ -42,16 +42,12 @@ export class LoginComponent implements OnInit {
   createForm() {
     this.loginForm = this.fb.group(
       {
-        email: ["", [
-          Validators.required,
-          Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")
-        ]],
+        username: ["", Validators.required],
         password: ["", [
           Validators.required,
           // Validators.pattern("^[a-zA-Z]{2}[a-zA-Z0-9]{6,14}$")
-          Validators.pattern("^[a-zA-Z0-9]{2}[a-zA-Z0-9]{6,14}$")
-        ]],
-        role: ["admin"]
+          Validators.pattern("^[a-zA-Z0-9_&^]{2}[a-zA-Z0-9_&^]{4,14}$")
+        ]]
       }
     )
   }
@@ -87,17 +83,15 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid && !this.isLoading) {
       this.store.dispatch(new Login(this.loginForm.value)).subscribe(
         res => {
+          debugger;
           this.loginForm.reset();
-          this.toastr.success('Valid Email', 'Success', {
+          this.toastr.success('Valid Username', 'Success', {
             timeOut: 2000
           });
           this.isSubmited = false;
 
           localStorage.setItem("token", res.auth.token);
           this.router.navigate(["/dashboard"])
-        },
-        err => {
-          // this.error.handleError(err);
         }
       );
     }
