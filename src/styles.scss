@@ -1,1 +1,99 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* start component login lang ar */
+html:lang(ar) {
+  .layOut-language {
+    margin-right: 0;
+    margin-left: 26px;
+  }
+
+  .mat-form-field {
+    direction: rtl;
+  }
+
+  .headerAddTask {
+    flex-direction: row-reverse;
+  }
+
+  .container-login .inner-text-title .title::before {
+    left: initial !important;
+    right: -2.5vw;
+    border-color: transparent white transparent transparent !important;
+  }
+
+  .header {
+    text-align: left !important;
+  }
+
+  .form-login {
+    .form-check {
+      .form-check-input {
+        float: right;
+        margin-right: -1.5em;
+        margin-left: 0 !important;
+      }
+
+      padding-left: 0 !important;
+      padding-right: 1.5em;
+    }
+  }
+
+  .content-select-language {
+
+    .mat-form-field-label,
+    .mat-select-value {
+      text-align: right
+    }
+
+    .mat-option {
+      direction: rtl;
+    }
+
+    .mat-option-text {
+      margin-right: 10px;
+      text-align: right;
+    }
+  }
+
+  .content-select-language {
+    position: absolute;
+    top: 2vw;
+    right: initial;
+    left: 5vw;
+  }
+
+  .me-auto {
+    margin-left: auto;
+    margin-right: 0 !important;
+  }
+
+  .dialog-footer {
+    direction: rtl;
+  }
+}
+
+.columnActionTable {
+  width: 190px;
+  padding: 0 !important;
+}
+
+.mat-paginator-page-size-select {
+  margin: 0 !important;
+  width: 65px !important;
+
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+
+    .mat-form-field-infix {
+      border-top: 0;
+      margin: 0 !important;
+      padding: 10px 4px !important;
+    }
+  }
+}
+
+.cdk-visually-hidden {
+  display: none !important;
+}
+
+/* End component login lang ar */
