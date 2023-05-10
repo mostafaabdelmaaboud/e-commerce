@@ -42,11 +42,6 @@ export interface UserID {
 }
 
 export interface Filteration {
-  keyword?: string;
-  userId?: string;
-  status?: string;
-  fromDate?: string | null;
-  toDate?: string | null;
   page?: number,
   limit?: number
 }

@@ -62,8 +62,10 @@ export class LoginComponent implements OnInit {
     })
 
     this.translate.onLangChange.subscribe((lang) => {
-      this.langs[0].viewValue = lang.translations.login.arabic;
-      this.langs[1].viewValue = lang.translations.login.english;
+      this.langs = [
+        { value: 'ar', viewValue: lang.translations.login.arabic },
+        { value: 'en', viewValue: lang.translations.login.english }
+      ]
 
     })
   }

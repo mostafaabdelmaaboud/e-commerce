@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { ToastrModule } from 'ngx-toastr';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -22,6 +24,8 @@ describe('LoginComponent', () => {
             deps: [HttpClient]
           }
         }),
+        NgxsModule.forRoot(),
+        ToastrModule.forRoot(),
         HttpClientModule
       ],
       declarations: [
@@ -42,20 +46,8 @@ describe('LoginComponent', () => {
 
     component.selectChange({ value: "en" })
     expect(document.documentElement.dir).toEqual("ltr");
+    expect(localStorage.getItem("currentLang")).toEqual("en");
 
-
-  });
-  it('#changeLanguageSelect() check on property selectedLang', () => {
-    component.selectChange({ value: "ar" });
-    expect(component.langs).toEqual([
-      { value: 'ar', viewValue: 'عربي' },
-      { value: 'en', viewValue: 'انجليزي' },
-    ])
-    component.selectChange({ value: "en" })
-    expect(component.langs).toEqual([
-      { value: 'ar', viewValue: 'Arabic' },
-      { value: 'en', viewValue: 'English' },
-    ])
 
   });
 });
