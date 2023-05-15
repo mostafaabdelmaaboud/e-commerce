@@ -78,7 +78,7 @@ export class AllProductsState {
       this.productsData = null
     }
     return this.productsService.getProducts(this.productsData).pipe(
-      tap(res => {
+      tap((res: any) => {
         patchState({
           products: res,
           productsLoaded: true,
@@ -99,7 +99,7 @@ export class AllProductsState {
   addProduct({ patchState, dispatch, getState }: StateContext<AllProductsModel>, { payload }: AddProduct) {
 
     return this.productsService.addProduct(payload).pipe(
-      tap(res => {
+      tap((res: any) => {
         patchState({
           products: [
             ...getState().products,
@@ -118,7 +118,7 @@ export class AllProductsState {
   @Action(UpdateProduct)
   updateProduct({ patchState, dispatch, getState }: StateContext<AllProductsModel>, { payload, id }: UpdateProduct) {
     return this.productsService.updateProduct(payload, id).pipe(
-      tap(res => {
+      tap((res: any) => {
         let indexItem = getState().products.findIndex((item: any) => {
           return item.id === res.id
         });
@@ -143,7 +143,7 @@ export class AllProductsState {
   @Action(DeleteProduct)
   deleteProduct({ patchState, dispatch, getState }: StateContext<AllProductsModel>, { id }: DeleteProduct) {
     return this.productsService.deleteProduct(id).pipe(
-      tap(res => {
+      tap((res: any) => {
         let indexItem = getState().products.findIndex((item: any) => {
           return item.id === res.id
         });

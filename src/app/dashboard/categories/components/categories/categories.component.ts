@@ -31,24 +31,24 @@ export class CategoriesComponent implements OnInit {
   };
   constructor() { }
   ngOnInit(): void {
-    this.selectedProduct$.subscribe(selectedProduct => {
+    this.selectedProduct$.subscribe((selectedProduct: any) => {
       this.selectedCategory = selectedProduct;
     })
     this.categoriesLoaded$.subscribe((categoriesLoaded: any) => {
       if (!categoriesLoaded) {
         this.isLoading = true;
-        this.store.dispatch(new GetCategorieUser()).subscribe(res => {
+        this.store.dispatch(new GetCategorieUser()).subscribe((res: any) => {
           this.isLoading = false;
         });
       }
     })
-    this.productsLoaded$.subscribe(productsLoaded => {
+    this.productsLoaded$.subscribe((productsLoaded: any) => {
       if (!productsLoaded) {
         this.store.dispatch(new GetAllProducts()).subscribe({
-          next: res => {
+          next: (res: any) => {
             this.isLoading = false;
           },
-          error: err => {
+          error: (err: any) => {
             this.isLoading = false;
           }
         });
@@ -66,10 +66,10 @@ export class CategoriesComponent implements OnInit {
       this.store.dispatch(new GetAllProducts())
     } else {
       this.store.dispatch(new GetProductsByCategory(even.value)).subscribe({
-        next: res => {
+        next: (res: any) => {
           this.isLoading = false;
         },
-        error: err => {
+        error: (err: any) => {
           this.isLoading = false;
         }
       });

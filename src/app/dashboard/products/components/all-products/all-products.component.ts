@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { MatLegacyPaginator as MatPaginator, MatLegacyPaginatorIntl as MatPaginatorIntl, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Filteration, ProductsModel } from '../../context/DTOs';
 import { TranslateService } from '@ngx-translate/core';
 import { AllProductsState } from '../../store/state/allProducts.state';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription, debounceTime } from 'rxjs';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DeleteProduct, GetAllProducts } from '../../store/actions/allProducts.actions';
 import { AddProductComponent } from '../add-product/add-product.component';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
@@ -64,7 +64,7 @@ export class AllProductsComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.paginationTranslate();
-    this.translate.onLangChange.subscribe((lang) => {
+    this.translate.onLangChange.subscribe((lang: any) => {
       this.paginationTranslate();
     });
     this.createForm();
@@ -75,17 +75,17 @@ export class AllProductsComponent implements OnInit {
 
       }
     });
-    this.totalItems$.subscribe(totalItems => {
+    this.totalItems$.subscribe((totalItems: any) => {
       this.length = totalItems;
     })
-    this.productsLoaded$.subscribe(productsLoaded => {
+    this.productsLoaded$.subscribe((productsLoaded: any) => {
       if (!productsLoaded) {
         this.isLoading = true;
         this.store.dispatch(new GetAllProducts(this.filteration)).subscribe({
-          next: res => {
+          next: (res: any) => {
             this.isLoading = false;
           },
-          error: err => {
+          error: (err: any) => {
             this.isLoading = false;
           }
         });
@@ -144,13 +144,13 @@ export class AllProductsComponent implements OnInit {
       this.tableData[objIndex].loading = true;
       this.setPagination(this.tableData);
       this.store.dispatch(new DeleteProduct(id)).subscribe({
-        next: data => {
+        next: (data: any) => {
           this.tableData[objIndex].loading = false;
           this.toastr.success("Product Is Deleted", 'Success', {
             timeOut: 2000
           });
         },
-        error: err => {
+        error: (err: any) => {
           this.tableData[objIndex].loading = false;
         },
       })

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, NgZone, OnInit, ViewChild, inject, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
@@ -5,12 +6,11 @@ import { Select, Store } from '@ngxs/store';
 import { ToastrService } from 'ngx-toastr';
 import { AllProductsState } from '../../store/state/allProducts.state';
 import { Observable, take } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ProductsModel } from '../../context/DTOs';
 import { AddProduct, UpdateProduct } from '../../store/actions/allProducts.actions';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -46,7 +46,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.creatForm();
-    this.addProductIsLoaded$.subscribe(res => {
+    this.addProductIsLoaded$.subscribe((res: any) => {
       this.isLoaded = res;
     });
     if (this.data) {
@@ -90,7 +90,7 @@ export class AddProductComponent implements OnInit {
     if (this.newProductForm.valid) {
       if (this.data) {
         this.store.dispatch(new UpdateProduct(this.newProductForm.value, this.data.id)).subscribe({
-          next: res => {
+          next: (res: any) => {
             this.dialogRef.close();
             this.toastr.success("success", 'Success', {
               timeOut: 2000
@@ -99,7 +99,7 @@ export class AddProductComponent implements OnInit {
         });
       } else {
         this.store.dispatch(new AddProduct(this.newProductForm.value)).subscribe({
-          next: res => {
+          next: (res: any) => {
             this.dialogRef.close();
             this.toastr.success("success", 'Success', {
               timeOut: 2000

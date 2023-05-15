@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { FilterCategoriesModel } from '../context/DTOs';
 import { Observable } from 'rxjs';
 import { AllCategoriesModel } from '../store/state/categores.state';
 import { environment } from 'src/environments/environment';
 import { ProductsModel } from '../../products/context/DTOs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
