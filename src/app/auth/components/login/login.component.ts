@@ -55,18 +55,14 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   ngOnInit(): void {
-
-
     this.stateisLogin$.subscribe(load => {
       this.isLoading = load;
     })
-
     this.translate.onLangChange.subscribe((lang) => {
       this.langs = [
         { value: 'ar', viewValue: lang.translations.login.arabic },
         { value: 'en', viewValue: lang.translations.login.english }
       ]
-
     })
   }
   formGet(fonrmControl: string) {

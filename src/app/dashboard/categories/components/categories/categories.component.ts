@@ -19,15 +19,10 @@ export class CategoriesComponent implements OnInit {
   @Select(Categores.allProducts) allProducts$!: Observable<ProductsModel[]>
   @Select(Categores.productsLoaded) productsLoaded$!: Observable<boolean>
   @Select(Categores.selectedProduct) selectedProduct$!: Observable<string>
-
-
   selectedCategory: string = "all";
-
   public translate = inject(TranslateService);
-
+  cartProducts: { item: ProductsModel, quantity: number }[] = [];
   baseApi = environment.baseApi;
-  categoriesData!: string[];
-  products!: ProductsModel[];
   private store = inject(Store);
   isLoading = true;
   totalItems: number = 0;
@@ -39,17 +34,6 @@ export class CategoriesComponent implements OnInit {
     this.selectedProduct$.subscribe(selectedProduct => {
       this.selectedCategory = selectedProduct;
     })
-    this.categorie$.subscribe(res => {
-      if (res.length) {
-        this.categoriesData = res;
-      }
-    });
-    this.allProducts$.subscribe(res => {
-      if (res?.length) {
-        this.products = res;
-
-      }
-    });
     this.categoriesLoaded$.subscribe((categoriesLoaded: any) => {
       if (!categoriesLoaded) {
         this.isLoading = true;
@@ -80,7 +64,6 @@ export class CategoriesComponent implements OnInit {
   changePage(even: any) {
     if (even.value === "all") {
       this.store.dispatch(new GetAllProducts())
-
     } else {
       this.store.dispatch(new GetProductsByCategory(even.value)).subscribe({
         next: res => {
@@ -90,10 +73,33 @@ export class CategoriesComponent implements OnInit {
           this.isLoading = false;
         }
       });
-
     }
-
-
   }
-
+  addToCart(item: { item: ProductsModel, quantity: number }) {
+    debugger;
+    if ("cart" in localStorage) {
+      debugger;
+      this.cartProducts = JSON.parse(localStorage.getItem("cart")!);
+      let existIndex = this.cartProducts.findIndex(list => list.item.id === item.item.id);
+      debugger;
+      if (existIndex >= 0) {
+        debugger;
+        if (this.cartProducts[existIndex].quantity != item.quantity) {
+          debugger;
+          this.cartProducts[existIndex].quantity = item.quantity;
+        }
+        debugger;
+        localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+      } else {
+        debugger;
+        this.cartProducts.push(item);
+        debugger;
+        localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+      }
+    } else {
+      debugger;
+      this.cartProducts.push(item);
+      localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+    }
+  }
 }

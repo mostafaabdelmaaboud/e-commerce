@@ -58,7 +58,9 @@
     "categoryis": "categoryis",
     "rating": "rating",
     "categories": "categories",
-    "all": "All"
+    "all": "All",
+    "stockleft": "Stock Left",
+    "addtocart": "Add to Cart"
   },
   "MAT_PAGINATOR": {
     "ITEMS_PER_PAGE": "Items per page",

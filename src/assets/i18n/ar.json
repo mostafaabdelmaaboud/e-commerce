@@ -58,7 +58,9 @@
     "categoryis": "الفئة هي",
     "rating": "تقييم",
     "categories": "فئات",
-    "all": "الجميع"
+    "all": "الجميع",
+    "stockleft": "بقي المخزون",
+    "addtocart": "أضف إلى السلة"
   },
   "MAT_PAGINATOR": {
     "ITEMS_PER_PAGE": "مواد لكل صفحة",

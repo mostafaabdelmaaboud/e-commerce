@@ -1,0 +1,28 @@
+<mat-card class="example-card d-flex position-relative">
+  <div class="centent-count">{{"shopping.stockleft" | translate}}: {{product.rating.count}}</div>
+  <div class="container-header-card">
+    <div class="image-card">
+      <img mat-card-image width="150px" [src]="product.image" alt="Photo of a Shiba Inu">
+    </div>
+    <mat-card-header>
+      <mat-card-title>{{product.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="truncate" matTooltip="{{product.description}}" matTooltipPosition="below">
+        {{product.description | ellipsis:100}}</p>
+    </mat-card-content>
+  </div>
+  <mat-card-actions>
+    <div class="container-actions d-flex justify-content-between align-items-center">
+      <div class="card-actions">
+        <button class="button-green btn btn-success" *ngIf="!switchAddCard" (click)="addCart()">{{editCart ? 'Edit Cart'
+          : ("shopping.addtocart" | translate)}}</button>
+        <div class="form-amout" *ngIf="switchAddCard">
+          <input type="number" name="amount" [(ngModel)]="amount">
+          <button class="button-green btn btn-success" (click)="addAmout(amount)">Add</button>
+        </div>
+      </div>
+      <span class="section-price">${{product.price}}</span>
+    </div>
+  </mat-card-actions>
+</mat-card>

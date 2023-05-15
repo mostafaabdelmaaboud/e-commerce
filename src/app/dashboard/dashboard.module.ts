@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { MatSelectModule } from '@angular/material/select';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     DashboardRoutingModule,
     SharedModule,
     NgbCollapseModule,
-    MatSelectModule
+    MatSelectModule,
+    MatBadgeModule
   ]
 })
 export class DashboardModule { }

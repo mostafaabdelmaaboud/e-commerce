@@ -3,6 +3,7 @@
 html,
 body {
   height: 100%;
+  z-index: 1;
 }
 
 body {
@@ -61,6 +62,26 @@ html:lang(ar) {
   .layOut-language {
     margin-right: 0;
     margin-left: 26px;
+  }
+
+  .centent-count {
+    position: absolute;
+    right: initial !important;
+    left: 8px;
+    top: 8px;
+  }
+
+  .demo-section {
+    margin-right: 0;
+    margin-left: 26px;
+  }
+
+  .form-amout {
+
+    input {
+      margin-left: 10px;
+      margin-right: 0 !important;
+    }
   }
 
   .mat-form-field {
@@ -149,7 +170,7 @@ html:lang(ar) {
 }
 
 .mat-tooltip {
-  font-size: 14px !important;
+  font-size: 12px !important;
 }
 
 .cdk-visually-hidden {

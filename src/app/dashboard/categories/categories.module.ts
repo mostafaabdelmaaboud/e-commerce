@@ -13,12 +13,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EllipsisPipe } from './components/categories/pipes/ellipsis.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CategoryComponent } from './components/category/category.component';
 
 
 @NgModule({
   declarations: [
     CategoriesComponent,
-    EllipsisPipe
+    EllipsisPipe,
+    CategoryComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,100 @@
+.container-header-card {
+  .image-card {
+    justify-content: center;
+    display: flex;
+    padding: 15px 0;
+
+    .mat-card-image {
+      width: initial !important;
+      margin: 0 !important;
+
+      height: 130px;
+    }
+  }
+}
+
+.section-one {
+
+  .mat-card-header {
+    margin-bottom: 10px;
+  }
+}
+
+
+:host ::ng-deep .mat-card-header {
+  .mat-card-title {
+    color: #3f51b5 !important;
+  }
+}
+
+:host ::ng-deep .mat-card-header-text {
+  margin: 0 0px !important;
+}
+
+:host ::ng-deep .mat-card {
+  .mat-card-actions {
+    margin-bottom: 0px !important;
+    padding-bottom: 5px !important;
+  }
+
+  height: 100%;
+}
+
+:host ::ng-deep .mat-card-header {
+  .mat-card-title {
+    color: #726b6b !important;
+    font-size: 16px;
+  }
+}
+
+
+.truncate {
+  font-size: 14px;
+  color: #4f4f4f;
+}
+
+.centent-count {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background-color: red;
+  color: white;
+  padding: 3px 15px;
+  font-size: 10px;
+  border-radius: 17px;
+  text-align: center;
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  -ms-border-radius: 17px;
+  -o-border-radius: 17px;
+}
+
+.button-green {
+  font-size: 14px;
+}
+
+.mat-card-actions {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.section-price {
+  font-size: 12px;
+  display: block;
+  background-color: #ecec1c;
+  padding: 2px 15px;
+  color: black;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+.form-amout {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  input {
+    width: 70px;
+    margin-right: 10px;
+  }
+}
