@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator, MatLegacyPaginatorIntl as MatPaginatorIntl, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Filteration, ProductsModel } from '../../context/DTOs';
 import { TranslateService } from '@ngx-translate/core';
 import { AllProductsState } from '../../store/state/allProducts.state';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription, debounceTime } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DeleteProduct, GetAllProducts } from '../../store/actions/allProducts.actions';
 import { AddProductComponent } from '../add-product/add-product.component';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',

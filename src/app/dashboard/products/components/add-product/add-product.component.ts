@@ -7,7 +7,7 @@ import { AllProductsState } from '../../store/state/allProducts.state';
 import { Observable, take } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ProductsModel } from '../../context/DTOs';
 import { AddProduct, UpdateProduct } from '../../store/actions/allProducts.actions';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
