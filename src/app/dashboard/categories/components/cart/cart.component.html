@@ -2,59 +2,58 @@
   <div class="card container-shoppingCart">
     <h5 class="card-header">Shopping Cart</h5>
     <div class="card-body">
-      <ul class="list-unstyled p-0 ul-card">
-        <li class="list-card">
-          <div class="content-cart justify-content-between d-flex">
-            <div class="section-cart align-items-center d-flex">
-              <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" width="60px" alt="">
-              <div class="description-cart">
-                <h2 class="title-description">dsa</h2>
-                <p class="paragh-cart">dsadsddsads </p>
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <ul class="list-unstyled p-0 ul-card">
+          <li class="list-card" *cdkVirtualFor="let cart of viewCartItems; let i = index">
+            <div class="content-cart justify-content-between d-flex">
+              <div class="section-cart align-items-center d-flex">
+                <img [src]="cart.item.image" width="60px" [alt]="cart.item.title">
+                <div class="description-cart">
+                  <h2 class="title-description">{{cart.item.title}}</h2>
+                  <p class="paragh-cart">{{cart.item.description}} </p>
+                </div>
+              </div>
+              <div
+                class="actions-and-price flex-column d-flex flex-direction-column justify-content-center align-items-center">
+                <div class="action-edit d-flex align-items-center">
+                  <div class="input-group edit-amount mb-3">
+                    <input type="number" class="amount input d-block font-weight-bold form-control"
+                      placeholder="Quantity" [(ngModel)]="cart.quantity" aria-label="Recipient's username"
+                      aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">Quantity</span>
+                    </div>
+                  </div>
+                  <!-- <input type="number" class="amount input d-block font-weight-bold" [value]="cart.quantity"> -->
+                  <button class="edit btn btn-success" (click)="cartItems.updateProductSignal(cart)">Edit</button>
+                </div>
+                <div class="d-flex">
+                  <span class="price d-block font-weight-bold">${{cart.quantity * cart.item.price}}</span>
+                  <button class="btn btn-danger action-remove" (click)="removeCart(cart, i)">remove</button>
+                </div>
               </div>
             </div>
-            <div
-              class="actions-and-price flex-column d-flex flex-direction-column justify-content-center align-items-center">
-              <span class="price d-block font-weight-bold">$25</span>
-              <button class="btn btn-danger action-remove">remove</button>
-            </div>
-          </div>
-        </li>
-        <li class="list-card">
-          <div class="content-cart justify-content-between d-flex">
-            <div class="section-cart align-items-center d-flex">
-              <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" width="60px" alt="">
-              <div class="description-cart">
-                <h2 class="title-description">dsa</h2>
-                <p class="paragh-cart">dsadsddsads </p>
-              </div>
-            </div>
-            <div
-              class="actions-and-price flex-column d-flex flex-direction-column justify-content-center align-items-center">
-              <span class="price d-block font-weight-bold">$25</span>
-              <button class="btn btn-danger action-remove">remove</button>
-            </div>
-          </div>
-        </li>
-        <li class="list-card">
-          <div class="content-cart justify-content-between d-flex">
-            <div class="section-cart align-items-center d-flex">
-              <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" width="60px" alt="">
-              <div class="description-cart">
-                <h2 class="title-description">dsa</h2>
-                <p class="paragh-cart">dsadsddsads </p>
-              </div>
-            </div>
-            <div
-              class="actions-and-price flex-column d-flex flex-direction-column justify-content-center align-items-center">
-              <span class="price d-block font-weight-bold">$25</span>
-              <button class="btn btn-danger action-remove">remove</button>
-            </div>
-          </div>
-        </li>
-
-      </ul>
+          </li>
+          <li *ngIf="!cartItems.cartItems().length">
+            <div class="alert alert-danger">Cart is Empty</div>
+          </li>
+        </ul>
+      </cdk-virtual-scroll-viewport>
 
     </div>
   </div>
-
+  <div class="container-subTotal" *ngIf="cartItems.totalItems()">
+    <div class="content-subTotal d-flex flex-column align-items-end">
+      <div class="section-subTotal text-center">
+        <div class="header-subTotal d-flex justify-content-between align-items-center">
+          <div class="subTotal">
+            <span class="d-block">Sub-total</span>
+            <span class="d-block">{{cartItems.totalItems()}} items</span>
+          </div>
+          <span class="total-price font-weight-bold">{{cartItems.subTotal()}}</span>
+        </div>
+        <button class="btn btn-checkout w-100">Checkout</button>
+      </div>
+    </div>
+  </div>
 </div>

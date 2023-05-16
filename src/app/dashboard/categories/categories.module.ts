@@ -33,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NgxPaginationModule,
     MatSelectModule,
     MatTooltipModule
+
   ]
 })
 export class CategoriesModule { }

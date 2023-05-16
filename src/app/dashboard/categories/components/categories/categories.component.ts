@@ -25,7 +25,6 @@ export class CategoriesComponent implements OnInit {
   private cartService = inject(CartService);
   selectedCategory: string = "all";
 
-  cartProducts: { item: ProductsModel, quantity: number }[] = [];
   baseApi = environment.baseApi;
   isLoading = true;
   totalItems: number = 0;
@@ -83,32 +82,17 @@ export class CategoriesComponent implements OnInit {
     debugger;
     if ("cart" in sessionStorage) {
       debugger;
-      this.cartProducts = JSON.parse(sessionStorage.getItem("cart")!);
-      let existIndex = this.cartProducts.findIndex(list => list.item.id === item.item.id);
       debugger;
+      let existIndex = this.cartService.cartItems().findIndex(list => list.item.id === item.item.id)
       if (existIndex >= 0) {
         debugger;
-        if (this.cartProducts[existIndex].quantity != item.quantity) {
-          debugger;
-          this.cartProducts[existIndex].quantity = item.quantity;
-        }
-        debugger;
-        sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
+        this.cartService.updateProductSignal(item);
       } else {
-        debugger;
-        this.cartProducts.push(item);
-        debugger;
-        sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
         this.cartService.addProductSignal(item);
-
       }
     } else {
       debugger;
-      this.cartProducts.push(item);
-      //add product with signal
-      sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
       this.cartService.addProductSignal(item);
-
     }
   }
 }

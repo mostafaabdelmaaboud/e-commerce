@@ -28,12 +28,15 @@ export class CategoryComponent implements OnInit {
   addAmout(amout: string) {
     debugger;
     console.log("amout", amout);
-    if (amout) {
+    if (parseInt(amout) > 0) {
       this.item.emit({ item: this.product, quantity: parseInt(amout) });
       this.editCart = true;
+      this.switchAddCard = false;
+
+    } else {
+      this.switchAddCard = true;
 
     }
-    this.switchAddCard = false;
 
   }
   addCart() {

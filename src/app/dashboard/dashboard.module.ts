@@ -9,6 +9,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CartComponent } from './categories/components/cart/cart.component';
 
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CartComponent } from './categories/components/cart/cart.component';
     SharedModule,
     NgbCollapseModule,
     MatSelectModule,
-    MatBadgeModule
+    MatBadgeModule,
+    ScrollingModule
   ]
 })
 export class DashboardModule { }
