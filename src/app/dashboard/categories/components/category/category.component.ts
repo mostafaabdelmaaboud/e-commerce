@@ -15,8 +15,8 @@ export class CategoryComponent implements OnInit {
   constructor() { }
   ngOnInit(): void {
     debugger;
-    if ('cart' in localStorage) {
-      let checkCart = JSON.parse(localStorage.getItem("cart")!);
+    if ('cart' in sessionStorage) {
+      let checkCart = JSON.parse(sessionStorage.getItem("cart")!);
       let existCart = checkCart.find((list: any) => list.item.id === this.product.id);
       if (existCart) {
         this.editCart = true;

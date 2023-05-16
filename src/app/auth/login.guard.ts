@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginGuard  {
+export class LoginGuard {
   constructor(private store: Store, private router: Router) { }
 
   canActivate(
@@ -14,7 +14,7 @@ export class LoginGuard  {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const authToken = localStorage.getItem("token");
     if (authToken) {
-      this.router.navigate(["/dashboard"]);
+      this.router.navigate(["/"]);
       return false;
     } else {
       return true;

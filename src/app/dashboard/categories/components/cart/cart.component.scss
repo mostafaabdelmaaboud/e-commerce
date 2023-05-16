@@ -1,0 +1,27 @@
+.container-shoppingCart {
+  margin-top: 50px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.description-cart {
+  margin-left: 20px;
+}
+
+.list-card:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+
+.action-remove {
+  padding: 2px 10px;
+  font-size: 14px;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.title-description {
+  font-size: 22px;
+}

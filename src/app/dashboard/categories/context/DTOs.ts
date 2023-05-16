@@ -1,3 +1,5 @@
+import { ProductsModel } from "../../products/context/DTOs";
+
 export interface FilterCategoriesModel {
   page: number;
 }
@@ -13,6 +15,11 @@ export interface CategoriesModel {
   updatedAt: Date;
   __v: number;
   isLoading?: boolean;
+
+}
+export interface CartModel {
+  item: ProductsModel,
+  quantity: number
 
 }
 export interface UserData {

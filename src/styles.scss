@@ -21,8 +21,6 @@ body {
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-
-
 .contentSpinner {
   position: absolute;
   top: 0;
@@ -69,6 +67,11 @@ html:lang(ar) {
     right: initial !important;
     left: 8px;
     top: 8px;
+  }
+
+  .description-cart {
+    margin-left: 0;
+    margin-right: 20px;
   }
 
   .demo-section {

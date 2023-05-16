@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
           this.isSubmited = false;
 
           localStorage.setItem("token", res.auth.token);
-          this.router.navigate(["/dashboard"])
+          this.router.navigate(["/"])
         }
       );
     }

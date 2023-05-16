@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthState } from 'src/app/auth/store/state/login.state';
 import { Logout } from 'src/app/auth/store/actions/login.actions';
+import { CartService } from '../categories/services/cart.service';
 
 @Component({
   selector: 'app-layout',
@@ -13,8 +14,8 @@ import { Logout } from 'src/app/auth/store/actions/login.actions';
 })
 export class LayoutComponent implements OnInit {
   selectedLang: string = "en";
-
   public translate = inject(TranslateService);
+  public totalItems = inject(CartService);
   langs = [
     { value: 'ar', viewValue: this.translate.instant("login.arabic") },
     { value: 'en', viewValue: this.translate.instant("login.english") },
@@ -32,8 +33,8 @@ export class LayoutComponent implements OnInit {
     this.translate.onLangChange.subscribe((lang) => {
       this.langs[0].viewValue = lang.translations.login.arabic;
       this.langs[1].viewValue = lang.translations.login.english;
-
     })
+    this.totalItems.cartItemsCheckStorage();
   }
   logout() {
     this.store.dispatch(new Logout()).subscribe(logout => {

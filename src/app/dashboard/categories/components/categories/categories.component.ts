@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { CategoriesModel, FilterCategoriesModel, UserData } from '../../context/DTOs';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-categories',
@@ -19,16 +20,19 @@ export class CategoriesComponent implements OnInit {
   @Select(Categores.allProducts) allProducts$!: Observable<ProductsModel[]>
   @Select(Categores.productsLoaded) productsLoaded$!: Observable<boolean>
   @Select(Categores.selectedProduct) selectedProduct$!: Observable<string>
-  selectedCategory: string = "all";
   public translate = inject(TranslateService);
+  private store = inject(Store);
+  private cartService = inject(CartService);
+  selectedCategory: string = "all";
+
   cartProducts: { item: ProductsModel, quantity: number }[] = [];
   baseApi = environment.baseApi;
-  private store = inject(Store);
   isLoading = true;
   totalItems: number = 0;
   filteration: FilterCategoriesModel = {
     page: 1,
   };
+
   constructor() { }
   ngOnInit(): void {
     this.selectedProduct$.subscribe((selectedProduct: any) => {
@@ -77,9 +81,9 @@ export class CategoriesComponent implements OnInit {
   }
   addToCart(item: { item: ProductsModel, quantity: number }) {
     debugger;
-    if ("cart" in localStorage) {
+    if ("cart" in sessionStorage) {
       debugger;
-      this.cartProducts = JSON.parse(localStorage.getItem("cart")!);
+      this.cartProducts = JSON.parse(sessionStorage.getItem("cart")!);
       let existIndex = this.cartProducts.findIndex(list => list.item.id === item.item.id);
       debugger;
       if (existIndex >= 0) {
@@ -89,17 +93,22 @@ export class CategoriesComponent implements OnInit {
           this.cartProducts[existIndex].quantity = item.quantity;
         }
         debugger;
-        localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+        sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
       } else {
         debugger;
         this.cartProducts.push(item);
         debugger;
-        localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+        sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
+        this.cartService.addProductSignal(item);
+
       }
     } else {
       debugger;
       this.cartProducts.push(item);
-      localStorage.setItem("cart", JSON.stringify(this.cartProducts));
+      //add product with signal
+      sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
+      this.cartService.addProductSignal(item);
+
     }
   }
 }
