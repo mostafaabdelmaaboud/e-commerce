@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AllProductsModel, DeleteProductModel } from '../store/state/allProducts.state';
 import { Observable } from 'rxjs';
 import { AddProductModel, ProductsModel } from '../context/DTOs';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  constructor(private http: HttpClient) { }
+  public testBrowser: boolean;
+
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) platformId: string) {
+    this.testBrowser = isPlatformBrowser(platformId);
+  }
   getProducts(filter: any): Observable<ProductsModel[]> {
     let queryParams = new HttpParams();
     if (filter) {
@@ -17,15 +22,39 @@ export class ProductsService {
         queryParams = queryParams.set(key, value);
       })
     }
-    return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
+    if (this.testBrowser) {
+      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
+
+    } else {
+      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
+
+    }
   }
   addProduct(mode: AddProductModel): Observable<ProductsModel> {
-    return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
+    if (this.testBrowser) {
+      return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
+
+    } else {
+      return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
+
+    }
   }
   deleteProduct(id: string): Observable<ProductsModel> {
-    return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
+    if (this.testBrowser) {
+      return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
+
+    } else {
+      return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
+
+    }
   }
   updateProduct(mode: AddProductModel, id: number): Observable<ProductsModel> {
-    return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
+    if (this.testBrowser) {
+      return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
+
+    } else {
+      return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
+
+    }
   }
 }

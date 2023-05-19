@@ -1,21 +1,29 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Inject, Injectable, Injector, inject } from '@angular/core';
+import { Inject, Injectable, Injector, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ToastrService } from 'ngx-toastr';
 import { Logout } from '../auth/store/actions/login.actions';
+import { isPlatformBrowser } from '@angular/common';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HandleErrorService {
+  plateformId: object;
 
-  constructor(private store: Store, private router: Router, private toastr: ToastrService) { }
+  constructor(private store: Store, private router: Router, private toastr: ToastrService, @Inject(PLATFORM_ID) plateformId: object) {
+    this.plateformId = plateformId;
+  }
 
   public handleError(err: HttpErrorResponse) {
     let errorMessage: string;
-    if (err.error instanceof ErrorEvent) {
-      errorMessage = `An error occurred: ${err.error.message}`
+    debugger;
+    if (err.status === 0) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+      console.error('An error occurred:', err.error);
+
     } else {
       switch (err.status) {
         case 400:
@@ -42,11 +50,11 @@ export class HandleErrorService {
         default:
           errorMessage = `somthing went wrong!`
       }
-      if (err.error.errors != undefined) {
+      if (err.error?.errors) {
         errorMessage = errorMessage + " " + err.error.massage
 
       }
-      if (err.error.message != undefined) {
+      if (err.error?.message) {
         errorMessage = err.error.message;
       }
 
@@ -68,6 +76,7 @@ export class HandleErrorService {
         });
       }
     }
+    return throwError(() => new Error(errorMessage));
   }
 
 

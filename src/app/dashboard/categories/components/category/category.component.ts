@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output, PLATFORM_ID, Inject } from '@angular/core';
 import { ProductsModel } from 'src/app/dashboard/products/context/DTOs';
 
 @Component({
@@ -12,11 +13,27 @@ export class CategoryComponent implements OnInit {
   amount!: string;
   switchAddCard = false;
   editCart = false;
-  constructor() { }
+  plateformId: object;
+
+  constructor(@Inject(PLATFORM_ID) plateformId: object) {
+    this.plateformId = plateformId;
+
+  }
   ngOnInit(): void {
     debugger;
-    if ('cart' in sessionStorage) {
-      let checkCart = JSON.parse(sessionStorage.getItem("cart")!);
+    let checkSession: boolean = false;
+    if (isPlatformBrowser(this.plateformId)) {
+      checkSession = "cart" in sessionStorage
+    }
+    if (checkSession) {
+      let checkCart;
+      if (isPlatformBrowser(this.plateformId)) {
+        checkCart = JSON.parse(sessionStorage.getItem("cart")!);
+
+      } else {
+        checkCart = JSON.parse(sessionStorage.getItem("cart")!);
+
+      }
       let existCart = checkCart.find((list: any) => list.item.id === this.product.id);
       if (existCart) {
         this.editCart = true;

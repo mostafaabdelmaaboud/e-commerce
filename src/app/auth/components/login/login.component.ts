@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService, TranslateStore } from '@ngx-translate/core';
 import { Select, Store } from '@ngxs/store';
@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HandleErrorService } from '../../../services/handle-error.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ import { HandleErrorService } from '../../../services/handle-error.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  plateformId: object;
+
   isLoading = false;
   isSubmited = false;
   @ViewChild('dangerTpl') danger!: ElementRef;
@@ -33,11 +36,20 @@ export class LoginComponent implements OnInit {
     { value: 'ar', viewValue: this.translate.instant("login.arabic") },
     { value: 'en', viewValue: this.translate.instant("login.english") },
   ];
-  constructor() {
-    this.selectedLang = localStorage.getItem("currentLang") || "en";
-    this.translate.setDefaultLang(this.selectedLang);
-    this.translate.use(this.selectedLang);
-    this.createForm()
+  constructor(@Inject(PLATFORM_ID) plateformId: object) {
+    this.plateformId = plateformId;
+    if (isPlatformBrowser(this.plateformId)) {
+      this.selectedLang = (isPlatformBrowser(this.plateformId) && localStorage.getItem("currentLang")) || "en";
+      this.translate.setDefaultLang(this.selectedLang);
+      this.translate.use(this.selectedLang);
+      this.createForm()
+    } else {
+      this.selectedLang = (isPlatformBrowser(this.plateformId) && localStorage.getItem("currentLang")) || "en";
+      this.translate.setDefaultLang(this.selectedLang);
+      this.translate.use(this.selectedLang);
+      this.createForm()
+    }
+
   }
   createForm() {
     this.loginForm = this.fb.group(
@@ -72,7 +84,13 @@ export class LoginComponent implements OnInit {
     document.documentElement.dir = selectLang.value == "ar" ? "rtl" : "ltr";
     document.documentElement.lang = selectLang.value;
     this.translate.use(selectLang.value);
-    localStorage.setItem("currentLang", selectLang.value);
+    if (isPlatformBrowser(this.plateformId)) {
+      localStorage.setItem("currentLang", selectLang.value);
+
+    } else {
+      localStorage.setItem("currentLang", selectLang.value);
+
+    }
   }
 
   login() {
@@ -85,8 +103,13 @@ export class LoginComponent implements OnInit {
             timeOut: 2000
           });
           this.isSubmited = false;
+          if (isPlatformBrowser(this.plateformId)) {
+            localStorage.setItem("token", res.auth.token);
 
-          localStorage.setItem("token", res.auth.token);
+          } else {
+            localStorage.setItem("token", res.auth.token);
+
+          }
           this.router.navigate(["/"])
         }
       );

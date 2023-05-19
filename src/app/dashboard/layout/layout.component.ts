@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthState } from 'src/app/auth/store/state/login.state';
 import { Logout } from 'src/app/auth/store/actions/login.actions';
 import { CartService } from '../categories/services/cart.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-layout',
@@ -14,6 +15,8 @@ import { CartService } from '../categories/services/cart.service';
 })
 export class LayoutComponent implements OnInit {
   selectedLang: string = "en";
+  plateformId: object;
+
   public translate = inject(TranslateService);
   public totalItems = inject(CartService);
   langs = [
@@ -23,8 +26,15 @@ export class LayoutComponent implements OnInit {
   @Select(AuthState.getAuthLogin) stateAuth$!: Observable<String | null>;
   public isCollapsed = true;
 
-  constructor(private store: Store, private router: Router) {
-    this.selectedLang = localStorage.getItem("currentLang") || "en";
+  constructor(private store: Store, private router: Router, @Inject(PLATFORM_ID) plateformId: object) {
+    this.plateformId = plateformId;
+    if (isPlatformBrowser(this.plateformId)) {
+      this.selectedLang = (isPlatformBrowser(this.plateformId) && localStorage.getItem("currentLang")) || "en";
+
+    } else {
+      this.selectedLang = (isPlatformBrowser(this.plateformId) && localStorage.getItem("currentLang")) || "en";
+
+    }
     this.translate.setDefaultLang(this.selectedLang);
     this.translate.use(this.selectedLang);
   }
@@ -45,7 +55,13 @@ export class LayoutComponent implements OnInit {
     document.documentElement.dir = selectLang.value == "ar" ? "rtl" : "ltr";
     document.documentElement.lang = selectLang.value;
     this.translate.use(selectLang.value);
-    localStorage.setItem("currentLang", selectLang.value);
+    if (isPlatformBrowser(this.plateformId)) {
+      localStorage.setItem("currentLang", selectLang.value);
+
+    } else {
+      localStorage.setItem("currentLang", selectLang.value);
+
+    }
   }
 
 }

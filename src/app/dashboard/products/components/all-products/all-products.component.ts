@@ -3,7 +3,7 @@ import { Filteration, ProductsModel } from '../../context/DTOs';
 import { TranslateService } from '@ngx-translate/core';
 import { AllProductsState } from '../../store/state/allProducts.state';
 import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription, debounceTime } from 'rxjs';
+import { Observable, ReplaySubject, Subscription, debounceTime, takeUntil } from 'rxjs';
 import { HandleErrorService } from 'src/app/services/handle-error.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -59,6 +59,8 @@ export class AllProductsComponent implements OnInit {
     { name: "Complete", id: 1 },
     { name: "In-Prossing", id: 2 },
   ]
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(0);
+
   constructor(
     public _MatPaginatorIntl: MatPaginatorIntl
   ) { }
@@ -78,7 +80,8 @@ export class AllProductsComponent implements OnInit {
     this.totalItems$.subscribe((totalItems: any) => {
       this.length = totalItems;
     })
-    this.productsLoaded$.subscribe((productsLoaded: any) => {
+    this.productsLoaded$.pipe(takeUntil(this.destroyed$)).subscribe((productsLoaded: any) => {
+      debugger;
       if (!productsLoaded) {
         this.isLoading = true;
         this.store.dispatch(new GetAllProducts(this.filteration)).subscribe({
@@ -180,6 +183,8 @@ export class AllProductsComponent implements OnInit {
   ngOnDestroy() {
     this.filteration = {};
     this.subscription.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
     // this.store.reset({});
   }
 

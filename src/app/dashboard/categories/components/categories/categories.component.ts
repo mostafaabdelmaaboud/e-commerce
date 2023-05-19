@@ -1,5 +1,5 @@
 import { ProductsModel } from './../../../products/context/DTOs';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { GetAllProducts, GetCategorieUser, GetProductsByCategory } from '../../store/actions/categores.actions';
 import { Categores } from '../../store/state/categores.state';
 import { Select, Store } from '@ngxs/store';
@@ -8,6 +8,7 @@ import { CategoriesModel, FilterCategoriesModel, UserData } from '../../context/
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { CartService } from '../../services/cart.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-categories',
@@ -31,9 +32,14 @@ export class CategoriesComponent implements OnInit {
   filteration: FilterCategoriesModel = {
     page: 1,
   };
+  plateformId: object;
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) plateformId: object) {
+    this.plateformId = plateformId;
+
+  }
   ngOnInit(): void {
+
     this.selectedProduct$.subscribe((selectedProduct: any) => {
       this.selectedCategory = selectedProduct;
     })
@@ -46,6 +52,7 @@ export class CategoriesComponent implements OnInit {
       }
     })
     this.productsLoaded$.subscribe((productsLoaded: any) => {
+      debugger;
       if (!productsLoaded) {
         this.store.dispatch(new GetAllProducts()).subscribe({
           next: (res: any) => {
@@ -65,7 +72,9 @@ export class CategoriesComponent implements OnInit {
     return item._id;
   }
   changePage(even: any) {
+
     if (even.value === "all") {
+
       this.store.dispatch(new GetAllProducts())
     } else {
       this.store.dispatch(new GetProductsByCategory(even.value)).subscribe({
@@ -80,7 +89,14 @@ export class CategoriesComponent implements OnInit {
   }
   addToCart(item: { item: ProductsModel, quantity: number }) {
     debugger;
-    if ("cart" in sessionStorage) {
+    let checkSession: boolean;
+    if (isPlatformBrowser(this.plateformId)) {
+      checkSession = "cart" in sessionStorage
+    } else {
+      checkSession = "cart" in sessionStorage
+
+    }
+    if (checkSession) {
       debugger;
       debugger;
       let existIndex = this.cartService.cartItems().findIndex(list => list.item.id === item.item.id)
