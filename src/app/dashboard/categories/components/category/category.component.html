@@ -2,7 +2,9 @@
   <div class="centent-count">{{"shopping.stockleft" | translate}}: {{product.rating.count}}</div>
   <div class="container-header-card">
     <div class="image-card">
-      <img mat-card-image width="150px" [src]="product.image" alt="Photo of a Shiba Inu">
+      <img mat-card-image width="150px"
+        [src]="product.image.includes('fakestoreapi') ? product.image : 'https://fakestoreapi.com/img/' + product.image"
+        [alt]="product.title">
     </div>
     <mat-card-header>
       <mat-card-title>{{product.title}}</mat-card-title>

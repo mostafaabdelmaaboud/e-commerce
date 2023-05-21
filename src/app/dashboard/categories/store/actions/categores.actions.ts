@@ -3,7 +3,7 @@ import { FilterCategoriesModel } from "../../context/DTOs";
 export class GetCategorieUser {
   static readonly type = "[Categories] Get All";
 }
-export class GetAllProducts {
+export class GetAllCategories {
   static readonly type = "[Categories] Get All Products"
 }
 export class GetProductsByCategory {

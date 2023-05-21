@@ -17,6 +17,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AllProductsComponent } from './components/all-products/all-products.component';
 import { provideClientHydration } from '@angular/platform-browser';
+import { Categores } from '../categories/store/state/categores.state';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { provideClientHydration } from '@angular/platform-browser';
     ProductsRoutingModule,
     SharedModule,
     MatTableModule,
-    NgxsModule.forFeature([AllProductsState]),
+    NgxsModule.forFeature([AllProductsState, Categores]),
     MatDialogModule,
     MatInputModule,
     MatDatepickerModule,

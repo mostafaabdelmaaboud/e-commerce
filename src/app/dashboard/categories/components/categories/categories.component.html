@@ -22,7 +22,7 @@
     <div class="col">
       <div class="row">
         <div class="section-card col-12 col-lg-3 col-md-4 col-sm-6"
-          *ngFor="let product of allProducts$ | async; let index = index; trackBy:identify">
+          *ngFor="let product of allProducts; let index = index">
           <app-category [product]="product" (item)="addToCart($event)"></app-category>
         </div>
         <div class="container-spinner d-flex" *ngIf="isLoading">

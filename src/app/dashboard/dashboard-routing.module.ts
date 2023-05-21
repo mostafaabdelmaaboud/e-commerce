@@ -4,10 +4,10 @@ import { LayoutComponent } from './layout/layout.component';
 import { CartComponent } from './categories/components/cart/cart.component';
 import { AuthGuard } from '../auth/auth-guard.guard';
 const childRoutes = [
-  { path: "", loadChildren: () => import("./products/products.module").then(m => m.ProductsModule) },
+  { path: "", loadChildren: () => import("./charts/charts.module").then(m => m.ChartsModule) },
+  { path: "products", loadChildren: () => import("./products/products.module").then(m => m.ProductsModule) },
   { path: "categories", loadChildren: () => import("./categories/categories.module").then(m => m.CategoriesModule) },
   { path: "carts", component: CartComponent, canActivate: [AuthGuard] }
-
 ]
 const routes: Routes = [
   { path: "", component: LayoutComponent, children: childRoutes },

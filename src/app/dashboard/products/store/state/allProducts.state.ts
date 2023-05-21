@@ -97,13 +97,15 @@ export class AllProductsState {
   }
   @Action(AddProduct)
   addProduct({ patchState, dispatch, getState }: StateContext<AllProductsModel>, { payload }: AddProduct) {
-
+    debugger;
     return this.productsService.addProduct(payload).pipe(
       tap((res: any) => {
+        debugger;
         patchState({
           products: [
-            ...getState().products,
-            res
+            res,
+            ...getState().products
+
           ]
         });
       }),

@@ -100,6 +100,7 @@ export class AddProductComponent implements OnInit {
       } else {
         this.store.dispatch(new AddProduct(this.newProductForm.value)).subscribe({
           next: (res: any) => {
+            debugger;
             this.dialogRef.close();
             this.toastr.success("success", 'Success', {
               timeOut: 2000

@@ -1,6 +1,6 @@
 import { ProductsModel } from './../../../products/context/DTOs';
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { GetAllProducts, GetCategorieUser, GetProductsByCategory } from '../../store/actions/categores.actions';
+import { GetAllCategories, GetCategorieUser, GetProductsByCategory } from '../../store/actions/categores.actions';
 import { Categores } from '../../store/state/categores.state';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit {
   @Select(Categores.allProducts) allProducts$!: Observable<ProductsModel[]>
   @Select(Categores.productsLoaded) productsLoaded$!: Observable<boolean>
   @Select(Categores.selectedProduct) selectedProduct$!: Observable<string>
+  allProducts: ProductsModel[] = [];
   public translate = inject(TranslateService);
   private store = inject(Store);
   private cartService = inject(CartService);
@@ -42,7 +43,12 @@ export class CategoriesComponent implements OnInit {
 
     this.selectedProduct$.subscribe((selectedProduct: any) => {
       this.selectedCategory = selectedProduct;
-    })
+    });
+    this.allProducts$.subscribe((res: ProductsModel[]) => {
+      debugger;
+      this.allProducts = this.mappingProducts(res);
+
+    });
     this.categoriesLoaded$.subscribe((categoriesLoaded: any) => {
       if (!categoriesLoaded) {
         this.isLoading = true;
@@ -54,7 +60,7 @@ export class CategoriesComponent implements OnInit {
     this.productsLoaded$.subscribe((productsLoaded: any) => {
       debugger;
       if (!productsLoaded) {
-        this.store.dispatch(new GetAllProducts()).subscribe({
+        this.store.dispatch(new GetAllCategories()).subscribe({
           next: (res: any) => {
             this.isLoading = false;
           },
@@ -67,7 +73,18 @@ export class CategoriesComponent implements OnInit {
       }
     })
   }
-
+  mappingProducts(data: ProductsModel[]): ProductsModel[] {
+    let newTasks: ProductsModel[] | any = data.map((item) => {
+      if (!item.rating) {
+        item.rating = data[2].rating
+      }
+      return {
+        ...item,
+        loading: false
+      }
+    });
+    return newTasks;
+  }
   identify(index: any, item: any) {
     return item._id;
   }
@@ -75,7 +92,7 @@ export class CategoriesComponent implements OnInit {
 
     if (even.value === "all") {
 
-      this.store.dispatch(new GetAllProducts())
+      this.store.dispatch(new GetAllCategories())
     } else {
       this.store.dispatch(new GetProductsByCategory(even.value)).subscribe({
         next: (res: any) => {

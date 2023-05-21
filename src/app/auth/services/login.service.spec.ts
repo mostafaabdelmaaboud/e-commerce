@@ -5,8 +5,6 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 
 describe('LoginService', () => {
   let service: LoginService;
-
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [LoginService, HttpClient, HttpHandler]

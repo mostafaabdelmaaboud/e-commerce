@@ -59,11 +59,20 @@ body {
   padding-right: 15px;
 }
 
+td.mat-cell:first-of-type {
+  padding-right: 15px;
+}
+
 /* start component login lang ar */
 html:lang(ar) {
   .layOut-language {
     margin-right: 0;
     margin-left: 26px;
+  }
+
+  td.mat-cell:first-of-type {
+    padding-right: 0;
+    padding-left: 15px;
   }
 
   .cdk-virtual-scroll-content-wrapper {

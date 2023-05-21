@@ -10,7 +10,9 @@
         <td class="image-td" mat-cell *matCellDef="let element, let index = index">
           <span class="mobile-label">{{"shopping.position" | translate}}:</span>
 
-          <img [alt]="element.title" [src]="element.image" alt="" width="70px" height="70px">
+          <img [alt]="element.title"
+            [src]="element.image.includes('fakestoreapi') ? element.image : 'https://fakestoreapi.com/img/' + element.image"
+            alt="" width="70px" height="70px">
         </td>
       </ng-container>
       <!-- title Column -->

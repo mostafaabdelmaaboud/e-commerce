@@ -12,6 +12,7 @@ import { AddProductComponent } from '../add-product/add-product.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { GetAllCategories } from 'src/app/dashboard/categories/store/actions/categores.actions';
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
@@ -21,7 +22,7 @@ import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/pag
   ]
 })
 export class AllProductsComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   displayedColumns: string[] = ['image', 'title', 'price', 'category', 'rating', 'actions'];
   tableData: ProductsModel[] = [];
   dataSource!: MatTableDataSource<any>;
@@ -71,8 +72,12 @@ export class AllProductsComponent implements OnInit {
     });
     this.createForm();
     this.subscription = this.allProducts$.subscribe((res: ProductsModel[]) => {
+      debugger;
       this.tableData = this.mappingProducts(res);
+
       if (res.length) {
+        debugger;
+
         this.setPagination(this.tableData);
 
       }
@@ -87,6 +92,7 @@ export class AllProductsComponent implements OnInit {
         this.store.dispatch(new GetAllProducts(this.filteration)).subscribe({
           next: (res: any) => {
             this.isLoading = false;
+            this.store.dispatch(new GetAllCategories())
           },
           error: (err: any) => {
             this.isLoading = false;
@@ -99,7 +105,10 @@ export class AllProductsComponent implements OnInit {
 
   }
   setPagination(tableData: ProductsModel[]) {
+    debugger;
     this.dataSource = new MatTableDataSource<ProductsModel>(tableData);
+    debugger;
+
     this.dataSource.paginator = this.paginator;
   }
   paginationTranslate() {
@@ -160,7 +169,10 @@ export class AllProductsComponent implements OnInit {
     }
   }
   mappingProducts(data: ProductsModel[]): ProductsModel[] {
-    let newTasks: ProductsModel[] | any = data.map((item) => {
+    let newTasks: ProductsModel[] | any = data?.map((item) => {
+      if (!item.rating) {
+        item.rating = data[2].rating
+      }
       return {
         ...item,
         loading: false

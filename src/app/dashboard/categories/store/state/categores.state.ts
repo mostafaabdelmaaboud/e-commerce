@@ -2,9 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { CategoriesModel } from "../../context/DTOs";
 import { CategorieUserService } from '../../services/categores.service';
-import { GetAllProducts, GetCategorieUser, GetProductsByCategory } from "../actions/categores.actions";
+import { GetAllCategories, GetCategorieUser, GetProductsByCategory } from "../actions/categores.actions";
 import { catchError, tap, throwError } from 'rxjs';
 import { ProductsModel } from 'src/app/dashboard/products/context/DTOs';
+import { AddProduct } from 'src/app/dashboard/products/store/actions/allProducts.actions';
+import { ProductsService } from 'src/app/dashboard/products/services/products.service';
 export interface AllProductsModel {
   products: ProductsModel[],
   productsLoaded: boolean,
@@ -35,6 +37,8 @@ export interface AllCategoriesModel {
 
 export class Categores {
   private categorieUserService = inject(CategorieUserService);
+  private productsService = inject(ProductsService);
+
   @Selector()
   static allProducts(state: AllProductsModel) {
     return state.products;
@@ -56,9 +60,10 @@ export class Categores {
   static productsLoaded(state: AllProductsModel) {
     return state.productsLoaded;
   }
+
   constructor() { }
-  @Action(GetAllProducts)
-  getAllProducts({ patchState }: StateContext<AllProductsModel>) {
+  @Action(GetAllCategories)
+  getAllCategories({ patchState }: StateContext<AllProductsModel>) {
     return this.categorieUserService.getProducts().pipe(
       tap(res => {
         patchState({
@@ -75,6 +80,29 @@ export class Categores {
           productsLoaded: false,
           selectedProduct: "all",
           totalItems: 0
+        });
+        return throwError(() => err);
+      })
+    )
+  }
+  @Action(AddProduct)
+  addProduct({ patchState, dispatch, getState }: StateContext<AllProductsModel>, { payload }: AddProduct) {
+    debugger;
+    return this.productsService.addProduct(payload).pipe(
+      tap((res: any) => {
+        debugger;
+
+        patchState({
+          products: [
+            res,
+            ...getState().products
+
+          ]
+        });
+      }),
+      catchError(err => {
+        patchState({
+
         });
         return throwError(() => err);
       })
