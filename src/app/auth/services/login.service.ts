@@ -10,18 +10,11 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class LoginService {
   private http = inject(HttpClient);
-  public testBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) platformId: string) {
-    this.testBrowser = isPlatformBrowser(platformId);
+  constructor() {
   }
   login(model: IntLogin): Observable<Authlogin> {
-    if (this.testBrowser) {
-      return this.http.post<Authlogin>(`${environment.baseApi}/auth/login`, model);
+    return this.http.post<Authlogin>(`${environment.baseApi}/auth/login`, model);
 
-    } else {
-      return this.http.post<Authlogin>(`${environment.baseApi}/auth/login`, model);
-
-    }
   }
 }

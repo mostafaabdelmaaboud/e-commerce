@@ -19,30 +19,16 @@ export class CategorieUserService {
   }
 
   getCategorieUser(): Observable<string[]> {
-    if (this.testBrowser) {
-      return this.http.get<string[]>(`${environment.baseApi}/products/categories`);
+    return this.http.get<string[]>(`${environment.baseApi}/products/categories`);
 
-    } else {
-      return this.http.get<string[]>(`${environment.baseApi}/products/categories`);
-
-    }
   }
   getProducts(): Observable<ProductsModel[]> {
-    if (this.testBrowser) {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`);
+    return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`);
 
-    } else {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`);
-
-    }
   }
   getProductsByCategory(name: string): Observable<ProductsModel[]> {
-    if (this.testBrowser) {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products/category/${name}`);
+    return this.http.get<ProductsModel[]>(`${environment.baseApi}/products/category/${name}`);
 
-    } else {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products/category/${name}`);
 
-    }
   }
 }

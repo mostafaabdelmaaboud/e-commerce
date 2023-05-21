@@ -1,5 +1,5 @@
 import { NgModule, TransferState } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +28,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
       defaultLanguage: "en",
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     !environment.production ? NgxsReduxDevtoolsPluginModule.forRoot() : [],
   ],
   providers: [
+    provideClientHydration(),
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true }
   ],

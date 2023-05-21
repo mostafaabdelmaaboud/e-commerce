@@ -10,14 +10,11 @@ import {
 } from '@angular/platform-browser';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+
 
 export class TranslateBrowserLoader implements TranslateLoader {
-  public testBrowser: boolean;
 
-  constructor(private http: HttpClient, private transferState: TransferState, @Inject(PLATFORM_ID) platformId?: string) {
-    this.testBrowser = isPlatformBrowser(platformId!);
+  constructor(private http: HttpClient, private transferState: TransferState) {
 
   }
 

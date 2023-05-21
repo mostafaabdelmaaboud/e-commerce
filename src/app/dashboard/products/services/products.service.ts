@@ -22,39 +22,23 @@ export class ProductsService {
         queryParams = queryParams.set(key, value);
       })
     }
-    if (this.testBrowser) {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
+    return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
 
-    } else {
-      return this.http.get<ProductsModel[]>(`${environment.baseApi}/products`, { params: queryParams });
 
-    }
   }
   addProduct(mode: AddProductModel): Observable<ProductsModel> {
-    if (this.testBrowser) {
-      return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
+    return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
 
-    } else {
-      return this.http.post<ProductsModel>(`${environment.baseApi}/products`, mode);
 
-    }
   }
   deleteProduct(id: string): Observable<ProductsModel> {
-    if (this.testBrowser) {
-      return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
+    return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
 
-    } else {
-      return this.http.delete<ProductsModel>(`${environment.baseApi}/products/${id}`);
 
-    }
   }
   updateProduct(mode: AddProductModel, id: number): Observable<ProductsModel> {
-    if (this.testBrowser) {
-      return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
+    return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
 
-    } else {
-      return this.http.put<ProductsModel>(`${environment.baseApi}/products/${id}`, mode);
 
-    }
   }
 }

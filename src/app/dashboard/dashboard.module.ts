@@ -10,6 +10,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CartComponent } from './categories/components/cart/cart.component';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { provideClientHydration } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatSelectModule,
     MatBadgeModule,
     ScrollingModule
+  ],
+  providers: [provideClientHydration()
   ]
 })
 export class DashboardModule { }

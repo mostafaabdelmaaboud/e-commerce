@@ -30,25 +30,16 @@ export class CartService {
   addProductSignal(product: CartModel) {
     this.cartProducts.push(product);
     debugger;
-    if (isPlatformBrowser(this.plateformId)) {
-      sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
+    sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
 
-    } else {
-      sessionStorage.setItem("cart", JSON.stringify(this.cartProducts));
-
-    }
     this.cartItems.mutate((val) => {
       val.push(product);
     })
   }
   updateProductSignal(product: CartModel) {
-    if (isPlatformBrowser(this.plateformId)) {
-      this.cartProducts = JSON.parse(sessionStorage.getItem("cart")!);
 
-    } else {
-      this.cartProducts = JSON.parse(sessionStorage.getItem("cart")!);
+    this.cartProducts = JSON.parse(sessionStorage.getItem("cart")!);
 
-    }
     let existIndex = this.cartProducts.findIndex(list => list.item.id === product.item.id);
     debugger;
     if (existIndex >= 0) {
@@ -76,12 +67,7 @@ export class CartService {
   }
   cartItemsCheckStorage() {
     this.cartItems.mutate((val) => {
-      debugger;
-      let checkSession: boolean;
-      if (isPlatformBrowser(this.plateformId)) {
-        checkSession = "cart" in sessionStorage
-      }
-      if (isPlatformBrowser(this.plateformId) && sessionStorage.getItem("cart")) {
+      if ("cart" in sessionStorage) {
         val.push(...JSON.parse(sessionStorage.getItem("cart")!));
 
 

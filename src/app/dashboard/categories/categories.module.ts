@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { provideClientHydration } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -34,6 +35,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatTooltipModule
 
+  ],
+  providers: [provideClientHydration()
   ]
 })
 export class CategoriesModule { }

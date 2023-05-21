@@ -13,11 +13,6 @@
     "prerender": "ng run e-commerce:prerender"
   },
   "private": true,
-  "resolutions": {
-    "css-select": "4.2.1",
-    "css-what": "5.1.0",
-    "domhandler": "4.3.1"
-  },
   "dependencies": {
     "@angular/animations": "^16.0.1",
     "@angular/cdk": "~14.2.7",
@@ -29,7 +24,7 @@
     "@angular/material": "~14.2.7",
     "@angular/platform-browser": "^16.0.1",
     "@angular/platform-browser-dynamic": "^16.0.1",
-    "@angular/platform-server": "^16.0.1",
+    "@angular/platform-server": "^16.0.2",
     "@angular/router": "^16.0.1",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@ng-bootstrap/ng-bootstrap": "^14.1.1",
@@ -68,10 +63,5 @@
     "ts-loader": "^9.4.2",
     "typescript": "~4.9.5",
     "webpack-cli": "^5.1.1"
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
   }
 }

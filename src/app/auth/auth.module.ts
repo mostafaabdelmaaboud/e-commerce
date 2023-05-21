@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxsModule } from '@ngxs/store';
 import { AuthState } from './store/state/login.state';
 import { MatSelectModule } from '@angular/material/select';
+import { provideClientHydration } from '@angular/platform-browser';
 @NgModule({
   declarations: [
     LoginComponent
@@ -17,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     NgxsModule.forFeature([AuthState])
 
-  ]
+  ],
+  providers: [provideClientHydration()]
 })
 export class AuthModule { }

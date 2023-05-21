@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AllProductsComponent } from './components/all-products/all-products.component';
+import { provideClientHydration } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import { AllProductsComponent } from './components/all-products/all-products.com
     MatSelectModule,
     MatPaginatorModule,
     MatProgressSpinnerModule
+  ],
+  providers: [provideClientHydration()
   ]
 })
 export class ProductsModule { }
