@@ -12,6 +12,7 @@ import HC_exporting from 'highcharts/modules/exporting';
   styleUrls: ['./area.component.scss']
 })
 export class AreaComponent implements OnInit {
+  isHighcharts = typeof Highcharts === 'object';
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: any = {};
   constructor() {

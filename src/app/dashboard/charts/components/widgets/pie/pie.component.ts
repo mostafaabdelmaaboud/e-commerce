@@ -13,6 +13,8 @@ import * as Highcharts from 'highcharts';
 export class PieComponent implements OnInit {
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: any = {};
+  isHighcharts = typeof Highcharts === 'object';
+
   ngOnInit(): void {
     this.chartOptions = {
       chart: {

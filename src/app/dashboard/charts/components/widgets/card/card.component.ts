@@ -14,6 +14,7 @@ export class CardComponent implements OnInit {
   @Input() label!: string;
   @Input() total!: string;
   @Input() precentage!: string;
+  isHighcharts = typeof Highcharts === 'object';
 
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: any = {};
